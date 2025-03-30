@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Message</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+        
+        body {
+            text-align: center;
+            font-family: 'Pacifico', cursive;
+            background-color: black;
+            padding-top: 50px;
+            overflow: hidden;
+            animation: strobe 1s infinite alternate;
+        }
+        
+        @keyframes strobe {
+            0% { background-color: black; }
+            100% { background-color: darkred; }
+        }
+        
+        #heart {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            height: 200px;
+            background-color: red;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            animation: heartbeat 1s infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        #heart::before,
+        #heart::after {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background-color: red;
+            border-radius: 50%;
+        }
+        
+        #heart::before {
+            top: -100px;
+            left: 0;
+        }
+        
+        #heart::after {
+            left: 100px;
+            top: 0;
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: translate(-50%, -50%) scale(1) rotate(-45deg); }
+            50% { transform: translate(-50%, -50%) scale(1.1) rotate(-45deg); }
+            100% { transform: translate(-50%, -50%) scale(1) rotate(-45deg); }
+        }
+        
+        #message {
+            font-size: 40px;
+            color: white;
+            font-weight: bold;
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            animation: fadeIn 2s ease-in-out forwards;
+        }
+        
+        #heart-message {
+            font-size: 24px;
+            color: white;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            position: absolute;
+            top: calc(50% + 120px);
+            left: 50%;
+            transform: translate(-50%, 0);
+        }
+        
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translate(-50%, -60%); }
+            100% { opacity: 1; transform: translate(-50%, -50%); }
+        }
+    </style>
+</head>
+<body>
+    <div id="heart" onclick="showHeartMessage()"></div>
+    <div id="heart-message">Mahal Kita Palagi</div>
+    <div id="message"></div>
+    <script>
+        let messages = ["I Love You", "LabLab ko"];
+        let index = 0;
+        let messageDiv = document.getElementById("message");
+        let heartMessage = document.getElementById("heart-message");
+        
+        function showMessage() {
+            if (index < messages.length) {
+                messageDiv.innerHTML = messages[index];
+                messageDiv.style.animation = "none";
+                void messageDiv.offsetWidth;
+                messageDiv.style.animation = "fadeIn 2s ease-in-out forwards";
+                index++;
+                setTimeout(showMessage, 2000);
+            }
+        }
+        
+        function showHeartMessage() {
+            heartMessage.style.opacity = 1;
+        }
+        
+        showMessage();
+    </script>
+</body>
+</html>
